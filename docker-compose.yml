@@ -2,14 +2,15 @@ version: '3.1'
 services:
   db:
     container_name: magento-db
-    image: mysql
+    image: mysql:5.6.23
     # volumes:
-    #   - ./database/backup:/var/lib/mysql
+    #   - mysql-db:/var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: '123456'
-      MYSQL_USER: 'magento'
-      MYSQL_PASSWORD: 'magento'
-      MYSQL_DATABASE: 'magento'
+      # MYSQL_HOST: mysql
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_USER: magento
+      MYSQL_PASSWORD: magento
+      MYSQL_DATABASE: magento
     ports: 
       - "3306:3306"
     tty: true
@@ -32,7 +33,7 @@ services:
     depends_on:
       - db
     links:
-      - db
+      - db:mysql
     tty: true
     restart: always
     

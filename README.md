@@ -1,22 +1,38 @@
 
 
+```
+docker run --name magento-db -p 3306:3306 \
+-e MYSQL_ROOT_PASSWORD=123456 \
+-e MYSQL_DATABASE=magento \
+-e MYSQL_USER=magento \
+-e MYSQL_PASSWORD=magento \
+-d mysql:5.6.23
+```
+```
 docker run -it -v /var/www:/var/www -p 80:80 --name magento-web --link magento-db:mysql alpine
-apk update && apk upgrade
+```
+``` 
+apk update && apk upgrade && apk add --no-cache git curl openssl \
+php7 php7-fpm php7-opcache php7-json php7-phar php7-iconv php7-openssl php7-zlib php7-simplexml php7-tokenizer php7-xmlwriter php7-dom php7-mbstring \
+php7-session php7-ctype php7-curl php7-dom php7-mbstring php7-gd php7-fileinfo php7-pcntl php7-posix php7-xml php7-soap php7-mcrypt php7-bcmath php7-intl php7-xsl php7-zip php7-pdo_mysql \
+ && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && chmod +x /usr/local/bin/composer && chmod +x /usr/local/bin/composer
+ ```
+```
+composer create-project --repository-url=https://repo.magento.com/ magento/project-community-edition magento2  --ignore-platform-reqs
+```
+Go to magento site and take yours keys [https://marketplace.magento.com/customer/accessKeys/](https://marketplace.magento.com/customer/accessKeys/)
 
-docker run --name magento-db -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456 -e MYSQL_DATABASE=magento -d mysql
+Username = Public Key
 
+Password = Private Key
 
+```
+php bin/magento setup:static-content:deploy -f 
+```
 
-
-
-
-
-
-
-
-
-
-
+```
+php -S 0.0.0.0:80
+```
 
 [![Build Status](https://travis-ci.org/magento/magento2.svg?branch=2.2-develop)](https://travis-ci.org/magento/magento2)
 [![Open Source Helpers](https://www.codetriage.com/magento/magento2/badges/users.svg)](https://www.codetriage.com/magento/magento2)
