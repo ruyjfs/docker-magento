@@ -3,10 +3,7 @@ services:
   db:
     container_name: magento-db
     image: mysql:5.6.23
-    # volumes:
-    #   - mysql-db:/var/lib/mysql
     environment:
-      # MYSQL_HOST: mysql
       MYSQL_ROOT_PASSWORD: 123456
       MYSQL_USER: magento
       MYSQL_PASSWORD: magento
@@ -33,7 +30,7 @@ services:
     depends_on:
       - db
     links:
-      - db:mysql
+      - db:db
     tty: true
     restart: always
     
@@ -50,11 +47,3 @@ services:
   #     - web
   #   tty: true
   #   restart: always
-
-# volumes:
-#   "./database:/var/lib/mysql"
-
-  # volumes:
-    # ./database:/var/lib/mysql
-# volumes:
-#   mysql-db:
